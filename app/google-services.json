@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "993237327587",
+    "project_id": "zoodiacochino-40df9",
+    "storage_bucket": "zoodiacochino-40df9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:993237327587:android:3b8c891fc89376f52eefd6",
+        "android_client_info": {
+          "package_name": "com.jlino.zoodiacochino"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4osyBljF7z7273KobbLSet26CF8OZg94"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

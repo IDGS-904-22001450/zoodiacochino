@@ -1,5 +1,6 @@
 package com.jlino.zoodiacochino.screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -12,7 +13,10 @@ import androidx.navigation.NavHostController
 import com.jlino.zoodiacochino.FormViewModel
 import androidx.compose.foundation.Image
 import androidx.compose.ui.res.painterResource
+import com.google.firebase.Firebase
+import com.google.firebase.database.database
 import com.jlino.zoodiacochino.R
+import com.jlino.zoodiacochino.models.Persona
 
 @Composable
 fun ResultadoScreen(
@@ -35,6 +39,8 @@ fun ResultadoScreen(
     // Calculamos edad y signo zodiacal chino
     val edad = calcularEdad(anio)
     val signo = calcularSignoZodiaco(anio)
+
+    guardarEnDB(persona, calificacion, signo)
 
     // Diseño de la pantalla
     Column(
@@ -116,4 +122,28 @@ fun obtenerImagenPorSigno(signo: String): Int {
         "cerdo" -> R.drawable.cerdo
         else -> R.drawable.tigre // agrega una imagen por defecto si quieres
     }
+}
+
+fun guardarEnDB(persona: Persona, calificacion: Int, signo: String) {
+    val database = Firebase.database.reference
+
+    val resultadoMap = mapOf(
+        "nombre" to persona.nombre,
+        "apellidoPaterno" to persona.apePaterno,
+        "apellidoMaterno" to persona.apeMaterno,
+        "fechaNacimiento" to persona.fechaNacimiento,
+        "sexo" to persona.sexo,
+        "signoZodiacal" to signo,
+        "calificacion" to calificacion,
+        "timestamp" to System.currentTimeMillis()
+    )
+
+    // Guardamos dentro de "Resultados"
+    database.child("Resultados").push().setValue(resultadoMap)
+        .addOnSuccessListener {
+            Log.d("Firebase", "✅ Resultado guardado en Realtime DB")
+        }
+        .addOnFailureListener {
+            Log.e("Firebase", "❌ Error al guardar", it)
+        }
 }
